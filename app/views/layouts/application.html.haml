@@ -1,0 +1,23 @@
+!!! 5
+%html
+  %head
+    %title CanadaDrugs.com - New Application
+    = stylesheet_link_tag 'application'
+    = javascript_include_tag 'application'
+    = yield(:head)
+    = csrf_meta_tag
+    = yield :js
+  %body
+    
+    .navbar
+      .navbar-inner
+        .container
+          %a.brand{:href => "/"} New Application!
+
+    .container
+
+      .content
+        = yield
+
+    #dialog_container
+      = yield :dialogs
