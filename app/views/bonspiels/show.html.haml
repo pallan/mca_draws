@@ -3,7 +3,7 @@
 %p
   = select_tag('rink', options_from_collection_for_select(Rink.order('name ASC').all, :name, :name), :id => 'rink_select')
 
-- @bonspiel.draws.order('number asc').each do |draw|
+- @bonspiel.draws.order('number desc').each do |draw|
   %table.table.table-striped
     %caption= "Draw #{draw.number}"
     %thead
