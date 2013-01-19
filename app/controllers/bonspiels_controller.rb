@@ -1,5 +1,7 @@
 class BonspielsController < ApplicationController
   
+  caches_page :show
+  
   def index
   end
   
