@@ -42,5 +42,6 @@ namespace :app do
     end
     
     b.save!
+    `rm -Rf #{Rails.root}/public/bonspiels`
   end
 end
