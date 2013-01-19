@@ -27,12 +27,20 @@ class BonspielsController < ApplicationController
       io     = open(root_url + link['href'])
       reader = PDF::Reader.new(io)
 
+      event = nil
       reader.pages.each do |page|
         found = false
         page.text.split("\n").each do |line|
+          if line =~ /^      (.*?)/
+            line = 'ASHAM' if line.include?('ASHAM FINALISTS')
+            event = Event.where(:name => line.strip).first
+            event = Event.create(:name => line.strip) if event.nil?
+
+          end
           found = true if line.include?('SHEET')
           if found && line.length >= 82
             m       = Match.new
+            m.event = event
             m.black = Rink.where(:name => line[6..36].strip).first || Rink.new(:name => line[6..36].strip, :club => line[37..52].strip)
             m.red   = Rink.where(:name => line[52..82].strip).first || Rink.new(:name => line[52..82].strip, :club => line[83..-1].strip)
             m.sheet = line[0..5].strip
