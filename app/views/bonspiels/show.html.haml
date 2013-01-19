@@ -1,0 +1,23 @@
+%h1=@bonspiel.name
+
+%p
+  = select_tag('rink', options_from_collection_for_select(Rink.order('name ASC').all, :name, :name), :id => 'rink_select')
+
+- @bonspiel.draws.each do |draw|
+  %table.table.table-striped
+    %caption= "Draw #{draw.number}"
+    %thead
+      %tr
+        %th Sheet
+        %th Black
+        %th Red
+    - draw.matches.each do |m|
+      %tbody
+        %tr
+          %td
+            = m.sheet
+            &ndash;
+            = m.club
+          %td= m.black
+          %td= m.red
+        

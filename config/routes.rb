@@ -1,4 +1,7 @@
 McaDraws::Application.routes.draw do
+  resources :bonspiels
+
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
