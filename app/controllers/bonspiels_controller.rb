@@ -46,5 +46,7 @@ class BonspielsController < ApplicationController
     
     b.save!
     `rm -Rf #{Rails.root}/public/bonspiels`
+    
+    render :text => "Load attempted: #{draw_links.map{|l| l['href']}.inspect}"
   end
 end
