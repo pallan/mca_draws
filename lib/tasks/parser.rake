@@ -19,7 +19,8 @@ namespace :app do
     draw_links.each_with_index do |link, i|
 
       puts "Parsing #{link['href']}"
-      d = Draw.new(:number => i+1)
+      match = /DRAW(\d*)/.match(link['href'])
+      d = Draw.new(:number => match[1].to_i)
       io     = open(root_url + link['href'])
       reader = PDF::Reader.new(io)
 
