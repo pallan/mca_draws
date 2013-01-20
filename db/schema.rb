@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130120135333) do
+ActiveRecord::Schema.define(:version => 20130120195636) do
 
   create_table "bonspiels", :force => true do |t|
     t.string   "name"
@@ -53,9 +53,11 @@ ActiveRecord::Schema.define(:version => 20130120135333) do
     t.integer  "red_id"
     t.integer  "sheet"
     t.integer  "draw_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.integer  "event_id"
+    t.integer  "black_score"
+    t.integer  "red_score"
   end
 
   create_table "rinks", :force => true do |t|

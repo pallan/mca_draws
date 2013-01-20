@@ -2,6 +2,47 @@
 
 namespace :app do
   
+  task :load_results => :environment do
+    require 'open-uri'
+    root_url = "http://www.curlmanitoba.org/"
+    doc = Nokogiri::HTML(open(root_url + 'mca-mens-bonspiel'))
+    results_links = doc.css('p a').select{|link| link['href'].include?('/RESULTS-DRAW')}
+    results_links.each_with_index do |link, i|
+      
+      puts "Parsing #{link['href']}"
+      io     = open(root_url + link['href'])
+
+      reader = PDF::Reader.new(io)
+
+      reader.pages.each do |page|
+        found = false
+        page.text.split("\n").each_with_index do |line,x|
+          found = true if line.include?('SHEET')
+          if found && line.length >= 90
+            line.insert(36,' ') if line.length > 90 && line =~ /^\s{4}/
+            line = " #{line}" unless line =~ /^\s{4}/
+            black_rink = line[6..36].strip
+            black_score = line[46..50].strip.to_i
+            red_score = line[91..93].strip
+            red_rink = (line[45..46] =~ /\s{2}/ ? line[51..81] : line[49..81]).strip
+          
+            # puts "Checking; #{black_rink} vs. #{red_rink} '#{line[45..46]}'"
+          
+            black = Rink.where(:name => black_rink).first
+            red =  Rink.where(:name => red_rink).first
+          
+            match = nil
+            match = Match.where(:black_id => black.id, :red_id => red.id).first if black && red
+            unless match.nil?
+              match.update_attributes(:black_score => black_score, :red_score => red_score)
+            end
+          end
+        end
+      end
+    end
+    
+  end
+  
   task :load_draws => :environment do
     require 'open-uri'
     b = Bonspiel.first
