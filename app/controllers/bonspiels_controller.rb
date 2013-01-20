@@ -16,14 +16,14 @@ class BonspielsController < ApplicationController
     b = Bonspiel.find(params[:id])
     root_url = "http://www.curlmanitoba.org/"
     doc = Nokogiri::HTML(open(root_url + 'mca-mens-bonspiel'))
-    draw_links = doc.css('p a').select{|link| link['href'].include?('/DRAW')}
+    draw_links = doc.css('p a').select{|link| link['href'].include?('/DRAW') || link['href'].include?('/PARTIAL-DRAW') }
     parsed = DrawParser.all.map(&:filename)
     draw_links.reject!{|link| parsed.include?(link['href']) }
     draw_links.each_with_index do |link, i|
 
       puts "Parsing #{link['href']}"
       match = /DRAW(\d*)/.match(link['href'])
-      d = Draw.new(:number => match[1].to_i)
+      d = Draw.new(:number => match[1].to_i, :partial => link['href'].include?('PARTIAL'))
       io     = open(root_url + link['href'])
       reader = PDF::Reader.new(io)
 

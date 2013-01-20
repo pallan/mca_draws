@@ -6,8 +6,13 @@
 
 - @bonspiel.draws.order('number desc').limit(4).each do |draw|
   
-  %h2="Draw #{draw.number}"
+  %h2
+    ="Draw #{draw.number}"
+    = "(Partial)" if draw.partial?
   %table.table.table-striped
+    - if draw.partial?
+      %caption 
+        %strong NOTE this is a partial draw listing - Teams playing back to back will not be shown, the winners will stay in the club they played in.
     %thead
       %tr
         %th Event

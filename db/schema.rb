@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130119222321) do
+ActiveRecord::Schema.define(:version => 20130120135333) do
 
   create_table "bonspiels", :force => true do |t|
     t.string   "name"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(:version => 20130119222321) do
     t.integer  "bonspiel_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.boolean  "partial"
   end
 
   create_table "events", :force => true do |t|
