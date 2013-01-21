@@ -4,7 +4,7 @@
   %strong Select a team: 
   = select_tag('rink', options_from_collection_for_select(Rink.order('name ASC').all, :name, :name), :id => 'rink_select')
 
-- @bonspiel.draws.order('number desc').limit(4).each do |draw|
+- @draws.each do |draw|
   
   %h2
     ="Draw #{draw.number}"

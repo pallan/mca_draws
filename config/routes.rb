@@ -2,6 +2,7 @@ McaDraws::Application.routes.draw do
   resources :bonspiels do 
     member do
       get 'load'
+      get 'all'
     end
   end
 

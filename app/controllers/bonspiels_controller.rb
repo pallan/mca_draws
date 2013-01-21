@@ -1,6 +1,7 @@
 class BonspielsController < ApplicationController
   
   caches_page :show
+  caches_page :all
   
   def index
     b = Bonspiel.find(1)
@@ -9,6 +10,13 @@ class BonspielsController < ApplicationController
   
   def show
     @bonspiel = Bonspiel.find(params[:id])
+    @draws = @bonspiel.draws.order('number desc').limit(4)
+  end
+
+  def all
+    @bonspiel = Bonspiel.find(params[:id])
+    @draws = @bonspiel.draws.order('number desc')
+    render :action => :show
   end
   
   def load
