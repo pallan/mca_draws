@@ -10,12 +10,12 @@ class BonspielsController < ApplicationController
   
   def show
     @bonspiel = Bonspiel.find(params[:id])
-    @draws = @bonspiel.draws.order('number desc').limit(4)
+    @draws = @bonspiel.draws
   end
 
   def all
     @bonspiel = Bonspiel.find(params[:id])
-    @draws = @bonspiel.draws.order('number desc')
+    @draws = @bonspiel.draws
     render :action => :show
   end
   

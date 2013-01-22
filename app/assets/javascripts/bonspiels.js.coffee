@@ -4,8 +4,11 @@
 
 $ ->
   $('#rink_select').change (event) ->
+    $('section.draw').hide();
     $('.table > tbody > tr').each (index,row) =>
       if ($(row).text().indexOf($(this).val()) == -1)
         $(row).hide()
       else
         $(row).show()
+        $(row).parents('section.draw').show()
+        

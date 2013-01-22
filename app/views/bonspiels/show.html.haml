@@ -5,35 +5,35 @@
   = select_tag('rink', options_from_collection_for_select(Rink.order('name ASC').all, :name, :name), :id => 'rink_select')
 
 - @draws.each do |draw|
-  
-  %h2
-    ="Draw #{draw.number}"
-    = "(Partial)" if draw.partial?
-  %table.table.table-striped
-    - if draw.partial?
-      %caption 
-        %strong NOTE this is a partial draw listing - Teams playing back to back will not be shown, the winners will stay in the club they played in.
-    %thead
-      %tr
-        %th Event
-        %th Sheet
-        %th Club
-        %th Black
-        %th Score
-        %th Red
-        %th Score
-    %tbody
-      - draw.matches.each do |m|
+  %section.draw{:id => "draw_#{draw.number}"}
+    %h2
+      ="Draw #{draw.number}"
+      = "(Partial)" if draw.partial?
+    %table.table.table-striped
+      - if draw.partial?
+        %caption 
+          %strong NOTE this is a partial draw listing - Teams playing back to back will not be shown, the winners will stay in the club they played in.
+      %thead
         %tr
-          %td= m.event.try(:name)
-          %td= m.sheet
-          %td= m.club
-          %td{:class => (m.black == m.winner ? "winner" : "")}
-            = m.black
-          %td{:class => m.black == m.winner ? "winner" : ""}
-            = m.black_score
-          %td{:class => m.red == m.winner ? "winner" : ""}
-            = m.red
-          %td{:class => m.red == m.winner ? "winner" : ""}
-            = m.red_score
+          %th Event
+          %th Sheet
+          %th Club
+          %th Black
+          %th Score
+          %th Red
+          %th Score
+      %tbody
+        - draw.matches.each do |m|
+          %tr
+            %td= m.event.try(:name)
+            %td= m.sheet
+            %td= m.club
+            %td{:class => (m.black == m.winner ? "winner" : "")}
+              = m.black
+            %td{:class => m.black == m.winner ? "winner" : ""}
+              = m.black_score
+            %td{:class => m.red == m.winner ? "winner" : ""}
+              = m.red
+            %td{:class => m.red == m.winner ? "winner" : ""}
+              = m.red_score
         
