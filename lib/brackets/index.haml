@@ -1,0 +1,78 @@
+:javascript
+  $(function() {
+    $('#team_select').change(function(){
+      $('.team').hide();
+      $('#' + $(this).val()).show();
+    });
+
+    // Creates canvas 320 × 200 at 10, 50
+    var paper = Raphael('holder', 600, 400);
+
+    // Creates circle at x = 50, y = 40, with radius 10
+    var twelve_foot = paper.circle(100, 100, 300);
+    twelve_foot.attr("fill", "#00F");
+    twelve_foot.attr("stroke", "#000");
+
+    var eight_foot = paper.circle(100, 100, 200);
+    eight_foot.attr("fill", "#FFF");
+    eight_foot.attr("stroke", "#000");
+
+    var four_foot = paper.circle(100, 100, 100);
+    four_foot.attr("fill", "#F00");
+    four_foot.attr("stroke", "#000");
+    
+    var button = paper.circle(100, 100, 25);
+    button.attr("fill", "#Fff");
+    button.attr("stroke", "#000");
+    
+    var c = paper.path("M100 0L100 600");
+    var c = paper.path("M0 100L800 100");
+    
+    //var p = paper.path("M900 120C780 120 220 160 204,192").attr({stroke: "#ddd", opacity: 0.0}),
+    //    e = paper.circle(900, 120, 25).attr({stroke: "none", fill: "#f00"});
+    //    e.attr({rx: 5, ry: 3}).animateAlong(p, 4000, true, function () {
+    //      e.attr({rx: 4, ry: 4});
+    //    });
+    var e = paper.circle(900, 120, 25).attr({stroke: "#999", fill: "#f00"});
+    //e.animate({cx: 204, cy: 92}, 4000, ">");
+    e.animate({
+        "20%": {cx: 700, cy: 120},
+        "40%": {cx: 500, cy: 114},
+        "60%": {cx: 350, cy: 106},
+        "80%": {cx: 250, cy: 96},
+        "100%": {cx: 200, cy: 92}
+    }, 4000);
+
+    var c = paper.rect(0, 0, 600, 600);
+    c.attr({fill: "#FFF", stroke: "#fff", opacity: 0.85})
+
+  });
+  
+
+-# %select#team_select
+-#   %option{:value => ''} Select team
+-#   - @teams.keys.sort.each do |t|
+-#     %option{:value => t.downcase}
+-#       = t
+-#       
+-# 
+-# - @teams.each do |team, schedule|
+-#   - unless team == ''
+-#     %div.team{:id => team.downcase}
+-#       %h2= team
+-#       %table
+-#         %thead
+-#           %tr
+-#             %th Date
+-#             %th Time
+-#             %th Sheet
+-#             %th Opponent
+-#         %tbody
+-#           - schedule.sort_by { |record| record[:day] }.each do |day|
+-#             %tr
+-#               %td.day=day[:day].strftime('%a, %b %d')
+-#               %td=day[:time]
+-#               %td=day[:sheet]
+-#               %td=day[:versus]
+-# 
+%div#holder

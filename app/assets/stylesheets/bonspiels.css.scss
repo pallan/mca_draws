@@ -3,3 +3,9 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 td.winner { color: #408C0D }
+
+div#holder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -100; }
