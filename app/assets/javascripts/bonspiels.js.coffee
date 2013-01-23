@@ -3,9 +3,14 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $ ->
+  $('#drawbar').affix()
+
   $('#rink_select').change (event) ->
+    $('section').hide()
     $('.table > tbody > tr').each (index,row) =>
       if ($(row).text().indexOf($(this).val()) == -1)
         $(row).hide()
       else
         $(row).show()
+        $(row).parents('section').first().show()
+      

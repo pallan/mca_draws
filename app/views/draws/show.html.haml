@@ -1,0 +1,7 @@
+%h1=@bonspiel.name
+
+%p
+  = link_to('Back to Bonspiel', bonspiel_path(@bonspiel))
+  
+
+= render :partial => 'draw', :object => @draw

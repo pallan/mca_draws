@@ -1,0 +1,18 @@
+
+- content_for :sidebar do
+  #drawbar
+    %ul.nav.nav-list.bs-docs-sidenav.affix-top
+      - @draws.each do |d|
+        %li
+          = link_to("Draw #{d.number}", %Q{#draw_#{d.number}})
+
+%h1=@bonspiel.name
+
+%p
+  = link_to('Back to Bonspiel', bonspiel_path(@bonspiel))
+
+%p
+  %strong Select a team: 
+  = select_tag('rink', options_from_collection_for_select(Rink.order('name ASC').all, :name, :name), :id => 'rink_select')
+
+= render :partial => 'draws/draw', :collection => @draws

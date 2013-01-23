@@ -1,9 +1,13 @@
 McaDraws::Application.routes.draw do
+  get "draws/index"
+
+  get "draws/show"
+
   resources :bonspiels do 
     member do
       get 'load'
-      get 'all'
     end
+    resources :draws, :only => [:show, :index]
   end
 
 
