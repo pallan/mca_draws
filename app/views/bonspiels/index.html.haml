@@ -1,0 +1,75 @@
+:javascript
+  $(function() {
+
+    function nearestUpperPow2(v)
+    {
+      v--;
+      v |= v >> 1;
+      v |= v >> 2;
+      v |= v >> 4;
+      v |= v >> 8;
+      v |= v >> 16;
+      v |= v >> 32;
+      return v += 1;
+    }
+
+    function build_bracket(teams)
+    {
+      var pairings        = Math.ceil(teams.length),
+          number_of_teams = $.map( teams, function(n){
+                               return n;
+                            }).length,
+          bracket_size    = nearestUpperPow2(number_of_teams);
+
+      if ( (bracket_size & (bracket_size-1)) == 0)
+      {
+        var power = Math.log(bracket_size) / Math.LN2,
+            game_number = 0,
+            x = 10,
+            y = 0,
+            spacing = 100,
+            height = 50,
+            offset = height / 2,
+            matches = bracket_size / 2,
+            width = 150,
+            paper = Raphael('holder', (width*power)+200, (100*bracket_size/2)+40 );
+
+        for(j=0; j < power; j++)
+        {
+          var y_loc = y + offset;
+          var pairings = teams[j]
+          for(i=0; i < matches; i++)
+          {
+            if (pairings[i][1] == null) pairings[i][1] = ''
+            paper.path("M"+x+" "+y_loc+"l"+width+" 0l0 "+height+"l-"+width+" 0");
+            paper.text(x+5, y_loc-7, '').attr({'font-size':12,'text-anchor':'start' });
+            paper.text(x+5, y_loc-8, pairings[i][0]).attr({'font-size':12,'text-anchor':'start' });
+            paper.text(x+5, y_loc+(height-8), pairings[i][1]).attr({'font-size':12,'text-anchor':'start' });
+            paper.text(x+width-5, y_loc+(height/2), "Game #"+(game_number+1)).attr({'font-size':11,'text-anchor':'end' });
+            y_loc += spacing;
+            game_number += 1;
+          }
+          offset = spacing / 2;
+          spacing *= 2;
+          height *= 2;
+          x += width;
+          matches = matches / 2;
+        }
+        height = height / 2;
+        paper.path("M"+x+" "+height+"l"+width+" 0");
+        paper.text(x+5, height-8, teams[j][0]).attr({'font-size':12,'text-anchor':'start' });
+      }
+      else
+      {
+        console.log("Sorry, this isn't so fancy yet.  Your number of number_of_teams needs to be a power of 2 (2, 4, 8, 16, 32, 64, etc..) " + nearestUpperPow2(number_of_teams))
+      }
+    }
+
+    var data = #{@rounds};
+    build_bracket(data['rounds']);
+
+  });
+
+%div#holder
+
+
