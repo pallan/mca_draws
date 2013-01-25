@@ -4,23 +4,9 @@ class BonspielsController < ApplicationController
   caches_page :all
   
   def index    
-    rinks = Rink.limit(110).order('RAND()').all.map(&:name)    
-    
-
-    # pad the rinks to a power of 2
-    bracket_size = next_power_of_two(rinks.size)
-    rinks += Array.new(bracket_size-rinks.size)
-    pairings = seed_order(bracket_size).map { |index| rinks[index] }.each_slice(2).to_a
-
-    # Simulates the matches being played
-    round_count = (Math.log(bracket_size) / Math.log(2)).to_i
-    rounds = Array.new(round_count,[])
-    rounds[0] = pairings
-
-    0.upto(round_count-1) do |r|
-      rounds[r+1] = rounds[r].map {|pair| pair.compact.shuffle.first }.each_slice(2).to_a
-    end
-    @rounds = JSON.generate({:rounds => rounds})
+    rinks = Rink.limit(32).order('RAND()').all.map(&:name)    
+    @bracket = BracketFactory.new(rinks)
+    @rounds = JSON.generate(@bracket.simulate)
   end
   
   def show

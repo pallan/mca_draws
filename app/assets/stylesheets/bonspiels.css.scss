@@ -2,10 +2,9 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-td.winner { color: #408C0D }
-
-div#holder {
+div#bracket {
   position: absolute;
   top: 40px;
   left: 0;
   z-index: -100; }
+
