@@ -44,3 +44,10 @@ gem "haml"
 group :development, :test do
   gem "rspec-rails"
 end
+
+group :test do
+  gem "capybara"
+  gem "cucumber"
+  gem "cucumber-rails"
+  gem 'database_cleaner'
+end
