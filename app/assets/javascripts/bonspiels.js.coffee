@@ -59,4 +59,5 @@ $ ->
       paper.path("M"+x+" "+height+"l"+width+" 0")
       paper.text(x+5, height-8, teams[j][0]).attr({'font-size':12,'text-anchor':'start' })
    
-  build_bracket($('#bracket').data('rounds'))
+  # build_bracket($('#bracket').data('rounds'))
+  $("[data-gracket]").gracket();
