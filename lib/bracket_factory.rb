@@ -21,11 +21,11 @@ class BracketFactory
     # Simulates the matches being played
     round_count = (Math.log(@bracket_size) / Math.log(2)).to_i
     rounds      = Array.new(round_count,[])
-    rounds[0]   = pairings.map {|p| [{:name => p[0].name, :seed => prng.rand(0..13), :id => "rink#{p[0].id}" },{:name => p[1].nil? ? '' : p[1].name, :seed =>  p[1].nil? ? 0 : prng.rand(0..13), :id => "rink#{ p[1].nil? ? '' : p[1].id}" }] }
+    rounds[0]   = pairings.map {|p| [{:name => p[0].name, :score => prng.rand(0..13), :id => "rink#{p[0].id}" },{:name => p[1].nil? ? '' : p[1].name, :score =>  p[1].nil? ? 0 : prng.rand(0..13), :id => "rink#{ p[1].nil? ? '' : p[1].id}" }] }
     0.upto(round_count-1) do |r|
       rounds[r+1] = rounds[r].map do |pair| 
-        pair[0][:seed] += 2 if pair[0][:seed] == pair[1][:seed] 
-        pair[0][:seed] > pair[1][:seed] ? pair[0].merge(:seed => prng.rand(0..13)) : pair[1].merge(:seed => prng.rand(0..13))
+        pair[0][:score] += 2 if pair[0][:score] == pair[1][:score] 
+        pair[0][:score] > pair[1][:score] ? pair[0].merge(:score => prng.rand(0..13)) : pair[1].merge(:score => prng.rand(0..13))
       end.each_slice(2).to_a
     end
     return rounds

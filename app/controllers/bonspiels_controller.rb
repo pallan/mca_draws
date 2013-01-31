@@ -4,7 +4,7 @@ class BonspielsController < ApplicationController
   caches_page :all
   
   def index    
-    rinks = Rink.limit(128).order('RAND()').all
+    rinks = Rink.limit(32).order('RAND()').all
     @bracket = BracketFactory.new(rinks)
     @rounds = JSON.generate(@bracket.simulate)
   end
