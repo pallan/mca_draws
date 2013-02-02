@@ -1,0 +1,40 @@
+<h1><%=@bonspiel.name%></h1>
+
+<p>
+  <strong>Select a team:</strong>
+  <%= select_tag('rink', options_from_collection_for_select(Rink.order('name ASC').all, :name, :name), :id => 'rink_select') %>
+</p>
+
+<% @draws.each do |draw| %>
+  
+  <h2>Draw <%= draw.number %> <%= "(Partial)" if draw.partial? %></h2>
+
+  <table class="table table-striped">
+    <% if draw.partial? %>
+      <caption><strong>NOTE this is a partial draw listing - Teams playing back to back will not be shown, the winners will stay in the club they played in.</strong></caption>
+    <% end %>
+    <thead>
+      <th>Event</th>
+      <th>Sheet</th>
+      <th>Club</th>
+      <th>Black</th>
+      <th>Score</th>
+      <th>Red</th>
+      <th>Score</th>
+    </thead>
+    <tbody>
+      <% draw.matches.each do |m| %>
+        <tr>
+          <td><%= m.event.try(:name) %></td>
+          <td><%= m.sheet %></td>
+          <td><%= m.club %></td>
+          <td class="<%=(m.black == m.winner ? "winner" : "")%>"><%= m.black %></td>
+          <td class="<%=(m.black == m.winner ? "winner" : "")%>"><%= m.black_score %></td>
+          <td class="<%=(m.black == m.winner ? "winner" : "")%>"><%= m.red %></td>
+          <td class="<%=(m.black == m.winner ? "winner" : "")%>"><%= m.red_score %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+<% end %>

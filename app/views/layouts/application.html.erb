@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MCA Draw Viewer</title>
+    <%= stylesheet_link_tag 'application' %>
+    <%= javascript_include_tag 'application' %>
+    <%= yield(:head) %>
+    <%= csrf_meta_tag %>
+    <%= yield :js %>
+    
+  </head>
+  <body>
+    <div class='navbar'>
+      <div class='navbar-inner'>
+        <div class='container'>
+          <a class='brand' href='/'>MCA Draw Viewer</a>
+        </div>
+      </div>
+    </div>
+    <div class='container-fluid'>
+      <div class='content'>
+        <%= yield %>
+      </div>
+    </div>
+    <div id='dialog_container'>
+      <%= yield :dialogs %>
+    </div>
+  </body>
+</html>
